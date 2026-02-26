@@ -1,27 +1,38 @@
 package ua.opnu;
 
 public class BankAccount {
-    String name;
+    // Видалено поле 'name', оскільки воно не використовується
     double balance;
     double transactionFee;
 
     void deposit(double amount) {
-        // TODO: modify method body
-        balance = balance + amount;
+        if (amount > 0) {
+            balance += amount;
+        }
     }
 
     double getBalance() {
-        return this.balance;
+        return balance;
     }
 
     boolean withdraw(double amount) {
-        // TODO: modify method body
-        balance = balance - amount;
-        return true;
+        if (amount <= 0) return false;
+        double totalDeduction = amount + transactionFee;
+        if (balance >= totalDeduction) {
+            balance -= totalDeduction;
+            return true;
+        }
+        return false;
     }
 
     boolean transfer(BankAccount receiver, double amount) {
-        // TODO: modify method body
+        if (amount <= 0) return false;
+        double totalDeduction = amount + transactionFee;
+        if (balance >= totalDeduction) {
+            balance -= totalDeduction;
+            receiver.balance += amount;
+            return true;
+        }
         return false;
     }
 }
